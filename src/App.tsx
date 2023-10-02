@@ -1,63 +1,40 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import 'bulma/css/bulma.css';
 import './App.scss';
-
-export const goodsFromServer = [
-  'Dumplings',
-  'Carrot',
-  'Eggs',
-  'Ice cream',
-  'Apple',
-  'Bread',
-  'Fish',
-  'Honey',
-  'Jam',
-  'Garlic',
-];
+import { SortButtons } from './Buttons';
+import { GoodsList } from './GoodsList';
+import { SortType } from './types';
+import { getSortedGoods, GOODS_FROM_SERVER } from './utils';
 
 export const App: React.FC = () => {
+  const [sortField, setSortField] = useState(SortType.DEFAULT);
+  const [isReversed, setIsReversed] = useState(false);
+  const [displayedGoods, setDisplayedGoods] = useState([...GOODS_FROM_SERVER]);
+
+  useEffect(() => {
+    // eslint-disable-next-line max-len
+    setDisplayedGoods(getSortedGoods(displayedGoods, { sortField, isReversed }));
+  }, [sortField, isReversed]);
+
+  const handleReset = () => {
+    setSortField(SortType.DEFAULT);
+    setIsReversed(false);
+  };
+
+  const handleReversedToggle = () => {
+    setIsReversed(prevState => !prevState);
+  };
+
   return (
     <div className="section content">
-      <div className="buttons">
-        <button
-          type="button"
-          className="button is-info is-light"
-        >
-          Sort alphabetically
-        </button>
-
-        <button
-          type="button"
-          className="button is-success is-light"
-        >
-          Sort by length
-        </button>
-
-        <button
-          type="button"
-          className="button is-warning is-light"
-        >
-          Reverse
-        </button>
-
-        <button
-          type="button"
-          className="button is-danger is-light"
-        >
-          Reset
-        </button>
-      </div>
-
-      <ul>
-        <ul>
-          <li data-cy="Good">Dumplings</li>
-          <li data-cy="Good">Carrot</li>
-          <li data-cy="Good">Eggs</li>
-          <li data-cy="Good">Ice cream</li>
-          <li data-cy="Good">Apple</li>
-          <li data-cy="Good">...</li>
-        </ul>
-      </ul>
+      <SortButtons
+        sortField={sortField}
+        isReversed={isReversed}
+        setSortField={setSortField}
+        handleReversedToggle={handleReversedToggle}
+        handleReset={handleReset}
+      />
+      <GoodsList goods={displayedGoods} />
     </div>
   );
 };
