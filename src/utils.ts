@@ -1,6 +1,6 @@
 import { SortType, SortingOptions } from './types';
 
-export const GOODS_FROM_SERVER = [
+export const GOODS_FROM_SERVER: string[] = [
   'Dumplings',
   'Carrot',
   'Eggs',
@@ -14,7 +14,7 @@ export const GOODS_FROM_SERVER = [
 ];
 
 export const getSortedGoods
-  = (goods: string[], { sortField, isReversed }: SortingOptions) => {
+  = (goods: string[], { sortField, isReversed }: SortingOptions): string[] => {
     if (sortField === SortType.DEFAULT) {
       return GOODS_FROM_SERVER;
     }

@@ -7,21 +7,22 @@ import { SortType } from './types';
 import { getSortedGoods, GOODS_FROM_SERVER } from './utils';
 
 export const App: React.FC = () => {
-  const [sortField, setSortField] = useState(SortType.DEFAULT);
-  const [isReversed, setIsReversed] = useState(false);
-  const [displayedGoods, setDisplayedGoods] = useState([...GOODS_FROM_SERVER]);
+  const [sortField, setSortField] = useState<SortType>(SortType.DEFAULT);
+  const [isReversed, setIsReversed] = useState<boolean>(false);
+  const [displayedGoods, setDisplayedGoods]
+    = useState<string[]>([...GOODS_FROM_SERVER]);
 
   useEffect(() => {
     // eslint-disable-next-line max-len
     setDisplayedGoods(getSortedGoods(displayedGoods, { sortField, isReversed }));
   }, [sortField, isReversed]);
 
-  const handleReset = () => {
+  const handleReset = (): void => {
     setSortField(SortType.DEFAULT);
     setIsReversed(false);
   };
 
-  const handleReversedToggle = () => {
+  const handleReversedToggle = (): void => {
     setIsReversed(prevState => !prevState);
   };
 

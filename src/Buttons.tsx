@@ -18,7 +18,7 @@ export const SortButtons: React.FC<Props>
     handleReversedToggle,
     handleReset,
   }) => {
-    const isSorted = sortField !== SortType.DEFAULT || isReversed;
+    const isSorted: boolean = sortField !== SortType.DEFAULT || isReversed;
 
     return (
       <div className="buttons">
